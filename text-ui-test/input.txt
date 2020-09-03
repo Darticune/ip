@@ -1,0 +1,11 @@
+list
+todo read a book
+deadline return book /by Friday 2359
+event go to library /at Friday
+list
+done 2
+list
+done 4
+list
+rubbish
+bye

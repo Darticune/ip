@@ -22,8 +22,9 @@ public class Duke {
     public static boolean isBye (String keyword) {
         return keyword.equals("bye");
     }
-    public static boolean isList (String keyword) {
-        return keyword.equals("list");
+    public static int findCommandLength (String command) {
+        String[] parsedStrings = command.split(" ", 2);
+        return parsedStrings.length;
     }
     public static void printTask (Todo[] recordedList, int index) {
         Todo element = recordedList[index];
@@ -48,7 +49,11 @@ public class Duke {
         System.out.println("Got it. I've added this task:");
         printTask(recordedList, listCount);
         listCount++;
-        System.out.println("Now you have " + listCount + " tasks in the list.");
+        System.out.print("Now you have " + listCount + " task");
+        if(listCount > 1) {
+            System.out.print("s");
+        }
+        System.out.println(" in the list.");
         return listCount;
     }
     public static int addDeadlineToList (Todo[] recordedList, String details, int listCount) {
@@ -57,7 +62,11 @@ public class Duke {
         System.out.println("Got it. I've added this task:");
         printTask(recordedList, listCount);
         listCount++;
-        System.out.println("Now you have " + listCount + " tasks in the list.");
+        System.out.print("Now you have " + listCount + " task");
+        if(listCount > 1) {
+            System.out.print("s");
+        }
+        System.out.println(" in the list.");
         return listCount;
     }
     public static int addEventToList (Todo[] recordedList, String details, int listCount) {
@@ -66,7 +75,11 @@ public class Duke {
         System.out.println("Got it. I've added this task:");
         printTask(recordedList, listCount);
         listCount++;
-        System.out.println("Now you have " + listCount + " tasks in the list.");
+        System.out.print("Now you have " + listCount + " task");
+        if(listCount > 1) {
+            System.out.print("s");
+        }
+        System.out.println(" in the list.");
         return listCount;
     }
     public static void completeTask (Todo[] recordedList, int index) {
@@ -91,7 +104,7 @@ public class Duke {
         String command = input.nextLine();
         String keyword = extractKeyword(command.trim());
         String details;
-        if ((!isList(keyword)) && (!isBye(keyword))) {
+        if(findCommandLength(command) > 1) {
             details = extractDetails(command.trim());
         }
         else {
@@ -131,12 +144,16 @@ public class Duke {
                     printHorizontal();
                     completeTask(recordedList, (index -1));
                     printHorizontal();
-                    break;
                 }
+                break;
+            default:
+                printHorizontal();
+                System.out.println("Sorry, this command does not exist!");
+                printHorizontal();
             }
             command = input.nextLine();
             keyword = extractKeyword(command.trim());
-            if ((!isList(keyword)) && (!isBye(keyword))) {
+            if(findCommandLength(command) > 1) {
                 details = extractDetails(command.trim());
             }
             else {
