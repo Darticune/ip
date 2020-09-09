@@ -3,20 +3,29 @@ import java.util.Scanner;
 
 public class Duke {
     public static final int MAX_TASK_COUNT = 100;
+    public static final String DIVIDER = "____________________________________________________________";
     public static final String DETAILS_ERROR = "ERROR: The description of ";
     public static final String EMPTY_FIELD = " cannot be empty!";
+    public static final String DEADLINE_FORMAT_INCORRECT = "Command format for Deadline is incorrect.";
+    public static final String EVENT_FORMAT_INCORRECT = "Command format for Event is incorrect.";
+    public static final String CORRECT_DEADLINE_FORMAT = "Correct format: deadline [DEADLINE_NAME] /by [DUE_BY]";
+    public static final String CORRECT_EVENT_FORMAT = "Correct format: event [EVENT_NAME] /at [DURATION]";
     public static final String COMPLETED_TASK = "Nice! I've marked this task as done:";
     public static final String INDEX_BEYOND_LIST = "Sorry, there is no such item.";
     public static final String INVALID_INDEX = "Please enter a valid task number.";
     public static final String INVALID_COMMAND = "Sorry, this command does not exist!";
+    public static final String HELLO = "Hello! I'm Duke";
+    public static final String PROMPT_START = "What can I do for you?";
+    public static final String EMPTY_LIST = "Sorry, you have no tasks in the list";
+    public static final String GOODBYE = "Bye. Hope to see you again soon!";
 
     public static void printDivider() {
-        System.out.println("____________________________________________________________");
+        System.out.println(DIVIDER);
     }
-    public static void printHeader() {
+    public static void printWelcomeMessage() {
         printDivider();
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
+        System.out.println(HELLO);
+        System.out.println(PROMPT_START);
         printDivider();
     }
     public static String getCommand() {
@@ -40,6 +49,9 @@ public class Duke {
     public static boolean isCompleteTask (String commandType) {
         return commandType.equals("done");
     }
+    public static boolean isBye (String keyword) {
+        return keyword.equals("bye");
+    }
     public static String extractCommandDetails(String command) {
         String[] parsedStrings = command.split(" ", 2);
         return parsedStrings[1];
@@ -49,9 +61,6 @@ public class Duke {
         System.out.println(DETAILS_ERROR + commandType + EMPTY_FIELD);
         printDivider();
     }
-    public static boolean isBye (String keyword) {
-        return keyword.equals("bye");
-    }
     public static void printTask (Todo[] recordedList, int index) {
         Todo element = recordedList[index];
         System.out.print("[" + element.taskType + "]");
@@ -60,7 +69,7 @@ public class Duke {
     }
     public static void printList (Todo[] recordedList, int listCount) {
         if (listCount == 0) {
-            System.out.println("Sorry, you have no tasks in the list");
+            System.out.println(EMPTY_LIST);
         } else {
             for (int i = 0; i < listCount; i++) {
                 System.out.print(i + 1);
@@ -83,51 +92,94 @@ public class Duke {
         recordedList[listCount] = new Todo(details, " ", "T");
         endAddTask(recordedList, listCount);
     }
-    public static void addDeadlineToList (Todo[] recordedList, String details, int listCount) {
+    public static boolean addDeadlineToList (Todo[] recordedList, String details, int listCount) {
         String[] parsedStrings = details.split(" /by ", 2);
-        recordedList[listCount] = new Deadline(parsedStrings[0], parsedStrings[1], "D");
-        endAddTask(recordedList, listCount);
+        boolean addedSuccessfully = false;
+        try {
+            recordedList[listCount] = new Deadline(parsedStrings[0], parsedStrings[1], "D");
+            endAddTask(recordedList, listCount);
+            addedSuccessfully = true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(DEADLINE_FORMAT_INCORRECT);
+            System.out.println(CORRECT_DEADLINE_FORMAT);
+        }
+        return addedSuccessfully;
     }
-    public static void addEventToList (Todo[] recordedList, String details, int listCount) {
+    public static boolean addEventToList (Todo[] recordedList, String details, int listCount) {
         String[] parsedStrings = details.split(" /at ", 2);
-        recordedList[listCount] = new Event(parsedStrings[0], parsedStrings[1], "E");
-        endAddTask(recordedList, listCount);
+        boolean addedSuccessfully = false;
+        try {
+            recordedList[listCount] = new Event(parsedStrings[0], parsedStrings[1], "E");
+            endAddTask(recordedList, listCount);
+            addedSuccessfully = true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(EVENT_FORMAT_INCORRECT);
+            System.out.println(CORRECT_EVENT_FORMAT);
+        }
+        return addedSuccessfully;
     }
     public static int getTaskIndex (String commandDetails) {
         return Integer.parseInt(commandDetails);
     }
     public static void completeTask (Todo[] recordedList, String commandDetails) {
         try {
-            int index = getTaskIndex(commandDetails);
-            recordedList[index-1].setAsDone();
+            int index = getTaskIndex(commandDetails)-1;
+            recordedList[index].setAsDone();
             System.out.println(COMPLETED_TASK);
-            printTask(recordedList, (index-1));
+            printTask(recordedList, (index));
         } catch (NumberFormatException e) {
             System.out.println(INVALID_INDEX);
-        } catch (IndexOutOfBoundsException e) {
+        } catch (NullPointerException e) {
             System.out.println(INDEX_BEYOND_LIST);
+            System.out.println(INVALID_INDEX);
         }
 
     }
-    public static void bidGoodbye () {
-        printDivider();
-        System.out.println("Bye. Hope to see you again soon!");
-        printDivider();
+    public static boolean processCommand(Todo[] recordedList, String commandType, String commandDetails,int listCount) {
+        boolean addedSuccessfully;
+        switch(commandType) {
+        case "todo":
+            addTodoToList(recordedList, commandDetails, listCount);
+            return true;
+        case "deadline":
+            addedSuccessfully = addDeadlineToList(recordedList, commandDetails, listCount);
+            if (addedSuccessfully) {
+                return true;
+            }
+            break;
+        case "event":
+            addedSuccessfully = addEventToList(recordedList, commandDetails, listCount);
+            if (addedSuccessfully) {
+                return true;
+            }
+            break;
+        case "list":
+            printList(recordedList, listCount);
+            break;
+        case "done":
+            completeTask(recordedList, commandDetails);
+            break;
+        case "bye":
+            bidGoodbye();
+            break;
+        default:
+            System.out.println(INVALID_COMMAND);
+        }
+        return false;
     }
-
-    public static void main(String[] args) {
+    public static void serveUser() {
         Todo[] recordedList = new Todo[MAX_TASK_COUNT];
         int listCount = 0;
-
-        printHeader();
 
         String command;
         String commandType;
         String commandDetails = "";
+        boolean addedTask;
 
         do {
             command = getCommand();
             commandType = extractCommandType(command.trim());
+
             if((isAddTask(commandType)) || isCompleteTask(commandType)) {
                 try {
                     commandDetails = extractCommandDetails(command.trim());
@@ -138,31 +190,20 @@ public class Duke {
             }
 
             printDivider();
-            switch(commandType) {
-            case "todo":
-                addTodoToList(recordedList, commandDetails, listCount);
-                listCount++;
-                break;
-            case "deadline":
-                addDeadlineToList(recordedList, commandDetails, listCount);
-                listCount++;
-                break;
-            case "event":
-                addEventToList(recordedList, commandDetails, listCount);
-                listCount++;
-                break;
-            case "list":
-                printList(recordedList, listCount);
-                break;
-            case "done":
-                completeTask(recordedList, commandDetails);
-                break;
-            default:
-                System.out.println(INVALID_COMMAND);
-            }
+            addedTask = processCommand(recordedList, commandType, commandDetails, listCount);
             printDivider();
-        } while (!isBye(commandType));
 
-        bidGoodbye();
+            if (addedTask) {
+                listCount++;
+            }
+        } while (!isBye(commandType));
+    }
+    public static void bidGoodbye () {
+        System.out.println(GOODBYE);
+    }
+
+    public static void main(String[] args) {
+        printWelcomeMessage();
+        serveUser();
     }
 }
