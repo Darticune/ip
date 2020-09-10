@@ -1,3 +1,9 @@
+package duke;
+
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Todo;
+
 import java.util.Scanner;
 
 
@@ -6,15 +12,15 @@ public class Duke {
     public static final String DIVIDER = "____________________________________________________________";
     public static final String DETAILS_ERROR = "ERROR: The description of ";
     public static final String EMPTY_FIELD = " cannot be empty!";
-    public static final String DEADLINE_FORMAT_INCORRECT = "Command format for Deadline is incorrect.";
-    public static final String EVENT_FORMAT_INCORRECT = "Command format for Event is incorrect.";
+    public static final String DEADLINE_FORMAT_INCORRECT = "Command format for duke.task.Deadline is incorrect.";
+    public static final String EVENT_FORMAT_INCORRECT = "Command format for duke.task.Event is incorrect.";
     public static final String CORRECT_DEADLINE_FORMAT = "Correct format: deadline [DEADLINE_NAME] /by [DUE_BY]";
     public static final String CORRECT_EVENT_FORMAT = "Correct format: event [EVENT_NAME] /at [DURATION]";
     public static final String COMPLETED_TASK = "Nice! I've marked this task as done:";
     public static final String INDEX_BEYOND_LIST = "Sorry, there is no such item.";
     public static final String INVALID_INDEX = "Please enter a valid task number.";
     public static final String INVALID_COMMAND = "Sorry, this command does not exist!";
-    public static final String HELLO = "Hello! I'm Duke";
+    public static final String HELLO = "Hello! I'm duke.Duke";
     public static final String PROMPT_START = "What can I do for you?";
     public static final String EMPTY_LIST = "Sorry, you have no tasks in the list";
     public static final String GOODBYE = "Bye. Hope to see you again soon!";
@@ -63,8 +69,8 @@ public class Duke {
     }
     public static void printTask (Todo[] recordedList, int index) {
         Todo element = recordedList[index];
-        System.out.print("[" + element.taskType + "]");
-        System.out.print("[" + element.getStatusIcon() + "] " + element.description);
+        System.out.print("[" + element.getTaskType() + "]");
+        System.out.print("[" + element.getStatusIcon() + "] " + element.getDescription());
         System.out.println(element.getTimeline());
     }
     public static void printList (Todo[] recordedList, int listCount) {
