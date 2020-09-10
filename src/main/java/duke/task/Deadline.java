@@ -1,3 +1,5 @@
+package duke.task;
+
 public class Deadline extends Todo{
 
     public Deadline(String details, String completeBy, String taskType) {
