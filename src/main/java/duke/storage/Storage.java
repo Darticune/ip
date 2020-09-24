@@ -14,10 +14,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Storage class, the class that contains the static methods to read and write to the savedData file
+ */
 public class Storage {
 
     //Initialisation from Saved Data
-    public Task convertToTask(String record) {
+    private static Task convertToTask(String record) {
         String[] parsedFields = record.split(" \\| ");
         switch(parsedFields[0]) {
         case "T":
@@ -33,7 +36,14 @@ public class Storage {
         }
         return null;
     }
-    public ArrayList<String> readDataAsStrings() throws FileNotFoundException {
+    private static ArrayList<Task> convertDataToTaskList(ArrayList<String> fileContent) {
+        ArrayList<Task> recordedList = new ArrayList<>();
+        for (String record : fileContent) {
+            recordedList.add(convertToTask(record));
+        }
+        return recordedList;
+    }
+    private static ArrayList<String> readDataAsStrings() throws FileNotFoundException {
         File dukeFile = new File ("data/Duke.txt");
         ArrayList<String> fileContents = new ArrayList<>();
         Scanner s = new Scanner(dukeFile);
@@ -42,14 +52,11 @@ public class Storage {
         }
         return fileContents;
     }
-    public ArrayList<Task> convertDataToTaskList(ArrayList<String> fileContent) {
-        ArrayList<Task> recordedList = new ArrayList<>();
-        for (String record : fileContent) {
-            recordedList.add(convertToTask(record));
-        }
-        return recordedList;
-    }
-    public ArrayList<Task> createTaskListFromSavedData() {
+    /**
+     * Reads the savedData from the file at data/Duke.txt, creates an ArrayList<Task> from it and returns it
+     * @return ArrayList<Task> created from data/Duke.txt
+     */
+    public static ArrayList<Task> createTaskListFromSavedData() {
         ArrayList<Task> recordedList;
         try {
             ArrayList<String> fileContent = readDataAsStrings();
@@ -61,19 +68,19 @@ public class Storage {
     }
 
     //Writing to data file
-    public boolean directoryExists() {
+    private static boolean directoryExists() {
         File dir = new File("data");
         return (dir.exists() && dir.isDirectory());
     }
-    public void createDirectory() {
+    private static void createDirectory() {
         File dir = new File ("data");
         dir.mkdir();
     }
-    public boolean savedDataFileExists() {
+    private static boolean savedDataFileExists() {
         File savedData = new File("data/Duke.txt");
         return savedData.exists();
     }
-    public void createSavedDataFile() {
+    private static void createSavedDataFile() {
         File dukeFile = new File ("data/Duke.txt");
         try {
             dukeFile.createNewFile();
@@ -81,17 +88,17 @@ public class Storage {
             System.out.println(Ui.TEXT_FILE_CREATION_FAILED);
         }
     }
-    public void emptyFileContents() throws IOException {
+    private static void emptyFileContents() throws IOException {
         FileWriter fw = new FileWriter("data/Duke.txt");
         fw.write("");
         fw.close();
     }
-    public void writeTask(Task task) throws IOException {
+    private static void writeTask(Task task) throws IOException {
         FileWriter fw = new FileWriter("data/Duke.txt", true);
         fw.write(task.toSaveFormat() + System.lineSeparator());
         fw.close();
     }
-    public void writeList(ArrayList<Task> recordedList) {
+    private static void writeList(ArrayList<Task> recordedList) {
         try {
             emptyFileContents();
             for (Task task : recordedList) {
@@ -101,7 +108,11 @@ public class Storage {
             System.out.println(Ui.SAVE_FAILED);
         }
     }
-    public void updateSavedData(ArrayList<Task> recordedList) {
+    /**
+     * Writes a ArrayList<Task> into the savedData file at data/Duke.txt
+     * @param recordedList ArrayList<Task> to be written into savedData file
+     */
+    public static void updateSavedData(ArrayList<Task> recordedList) {
         if(!directoryExists()) {
             createDirectory();
         }

@@ -1,5 +1,8 @@
 package duke.ui;
 
+/**
+ * Ui class, the class that contains the fixed outputs to the user on the console
+ */
 public class Ui {
     public static final String DIVIDER = "____________________________________________________________";
     public static final String HELLO = "Hello! I'm Duke";
@@ -22,15 +25,24 @@ public class Ui {
     public static final String INDEX_BEYOND_LIST = "Sorry, there is no such item.";
     public static final String INVALID_INDEX = "Please enter a valid task number.";
 
+    /**
+     * Prints a divider to the console
+     */
     public static void printDivider() {
         System.out.println(DIVIDER);
     }
+    /**
+     * Prints the Welcome message to console
+     */
     public static void printWelcomeMessage() {
         printDivider();
         System.out.println(HELLO);
         System.out.println(PROMPT_START);
         printDivider();
     }
+    /**
+     * Prints the Goodbye message to console
+     */
     public static void bidGoodbye() {
         System.out.println(GOODBYE);
     }
