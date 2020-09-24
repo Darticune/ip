@@ -10,6 +10,7 @@ public class Ui {
     public static final String PROMPT_START = "What can I do for you?";
     public static final String DETAILS_ERROR = "ERROR: The description of ";
     public static final String EMPTY_FIELD = " cannot be empty!";
+    public static final String NON_EMPTY_FIELD = " should be empty!";
     public static final String GOODBYE = "Bye. Hope to see you again soon!";
     public static final String INVALID_ENTRY = "Invalid entry in saved file: ";
     public static final String TEXT_FILE_CREATION_FAILED = "Unable to create text file";

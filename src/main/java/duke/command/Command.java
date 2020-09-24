@@ -47,6 +47,12 @@ public class Command {
                 handleEmptyCommandDetails(commandType);
                 setValidity(false);
             }
+        } else {
+            String[] parsedStrings = command.split(" ");
+            if (parsedStrings.length != 1) {
+                handleUnnecessaryCommandDetails(commandType);
+                setValidity(false);
+            }
         }
     }
 
@@ -110,6 +116,11 @@ public class Command {
     private void handleEmptyCommandDetails(String commandType) {
         Ui.printDivider();
         System.out.println(Ui.DETAILS_ERROR + commandType + Ui.EMPTY_FIELD);
+        Ui.printDivider();
+    }
+    private void handleUnnecessaryCommandDetails(String commandType) {
+        Ui.printDivider();
+        System.out.println(Ui.DETAILS_ERROR + commandType + Ui.NON_EMPTY_FIELD);
         Ui.printDivider();
     }
 }

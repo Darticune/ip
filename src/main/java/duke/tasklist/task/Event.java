@@ -1,9 +1,5 @@
 package duke.tasklist.task;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 /**
  * Event class, the class for the Event objects
  */

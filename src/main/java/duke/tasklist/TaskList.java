@@ -9,7 +9,7 @@ import duke.tasklist.task.Task;
 import java.util.ArrayList;
 
 /**
- * TaskList class, the class that holds the lists of tqasks and the methods that operate on it
+ * TaskList class, the class that holds the lists of tasks and the methods that operate on it
  */
 public class TaskList {
 
@@ -21,13 +21,17 @@ public class TaskList {
   
     /**
      * Constructor for TaskList class, initialises recordedList with the ArrayList<Task> that is passed to it
-     * @param initialisedList ArrayList<Task> that recordedList is initiliased with
+     * @param initialisedList ArrayList<Task> that recordedList is initialised with
      */
     public TaskList (ArrayList<Task> initialisedList) {
         recordedList = initialisedList;
     }
 
     //Getters
+    /**
+     * Getter for the recordedList stored in TaskList Objects
+     * @return ArrayList<Task> stored in TaskList object
+     */
     public ArrayList<Task> getRecordedList () {
         return recordedList;
     }
@@ -114,16 +118,17 @@ public class TaskList {
             removeTaskFromList(index);
         } catch (NumberFormatException e) {
             System.out.println(Ui.INVALID_INDEX);
-        } catch (NullPointerException e) {
-            System.out.println(Ui.INDEX_BEYOND_LIST);
-            System.out.println(Ui.INVALID_INDEX);
-        } catch (IndexOutOfBoundsException  e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             System.out.println(Ui.INDEX_BEYOND_LIST);
             System.out.println(Ui.INVALID_INDEX);
         }
 }
 
-    //Finding Keyword
+    /**
+     * Parses recordedList for subclass objects of Task for those with description contain the String details, adds
+     * them to a new ArrayList<Task> matchingTasks and passes the whole list to printMatchingTasks() to print to console
+     * @param details String containing the keyword(s) to be searched for
+     */
     public void findKeyword(String details) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : recordedList) {
@@ -135,7 +140,15 @@ public class TaskList {
     }
 
     //Printing the list
-    public void printMatchingTasks (ArrayList<Task> matchingTasks) {
+    private void printTaskTally() {
+        int listCount = recordedList.size();
+        System.out.print("Now you have " + listCount + " task");
+        if(listCount > 1) {
+            System.out.print("s");
+        }
+        System.out.println(" in the list.");
+    }
+    private void printMatchingTasks (ArrayList<Task> matchingTasks) {
         if (matchingTasks.size() != 0) {
             System.out.println(Ui.FIND_TASKS_SUCCESS);
             printList(matchingTasks);
@@ -162,13 +175,5 @@ public class TaskList {
                 printTask(listToPrint.get(i));
             }
         }
-    }
-    private void printTaskTally() {
-        int listCount = recordedList.size();
-        System.out.print("Now you have " + listCount + " task");
-        if(listCount > 1) {
-            System.out.print("s");
-        }
-        System.out.println(" in the list.");
     }
 }

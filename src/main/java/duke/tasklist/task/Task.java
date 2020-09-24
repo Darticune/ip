@@ -48,24 +48,34 @@ public abstract class Task {
         this.timeline = timeline;
     }
 
-    public void parseForDate() {
-        String[] parsedStrings = timeline.split(" ", 2);
-        try {
-            timeline = (toDateFormat(parsedStrings[0]));
-            timeline += (" " + parsedStrings[1]);
-        } catch (DateTimeParseException e) {
-            System.out.println("WHY U NO WORK");
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("SO U FUCKED UP HERE");
-        }
-    }
-    public String toDateFormat (String date) {
-        DateTimeFormatter inFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+    //Date Conversion
+    private String toDateFormat (String date) {
+        DateTimeFormatter inFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         DateTimeFormatter outFormatter = DateTimeFormatter.ofPattern("d MMM yyyy");
         LocalDate parsedDate = LocalDate.parse(date, inFormatter);
         return outFormatter.format(parsedDate);
     }
+    /**
+     * Parses the timeline field for a date that will be converted from d/MM/yyyy to d MMM yyyy
+     */
+    public void parseForDate() {
+        String[] parsedStrings = timeline.split(" ");
+        String lastParsedString = parsedStrings[parsedStrings.length -1];
+                timeline = "";
+        for (String parsedString : parsedStrings) {
+            try {
+                timeline += toDateFormat(parsedString);
+            } catch (DateTimeParseException | IndexOutOfBoundsException e) {
+                timeline += parsedString;
+            } finally {
+                if (!parsedString.equals(lastParsedString)) {
+                    timeline += " ";
+                }
+            }
+        }
+    }
 
+    //Getters
     /**
      * Getter for description of Task object
      * @return String containing description of Task object
@@ -89,17 +99,21 @@ public abstract class Task {
     }
     /**
      * Getter for taskType of Task object
-     * @return
+     * @return String containing taskType of Task object
      */
     public String getTaskType() {
         return taskType;
     }
+
+    //Setters
     /**
      * Setter for isDone to true from the default false once the done command is issued for the Task object
      */
     public void setAsDone() {
         this.isDone = true;
     }
+
+    //Convert to save format
     /**
      * Returns formatted String ready to be saved into savedData file
      * @return String with the formatted Task details

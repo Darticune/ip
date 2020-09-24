@@ -10,6 +10,7 @@ import duke.tasklist.TaskList;
  * command is given.
  */
 public class Parser {
+    protected boolean isBye;
     /**
      * Constructor for Parser, which:
      * Creates Command objects with user input and passes them to processCommand() until the command "bye" is given
@@ -17,23 +18,29 @@ public class Parser {
      * @param taskList Created Tasklist Object, used to store and access the task list
      */
     public Parser (TaskList taskList) {
-    protected boolean isBye;
         do {
             Command command = new Command();
             setIsBye(command);
             if (!command.getIsValid()) {
+                isBye = false;
                 continue;
             }
 
             Ui.printDivider();
             processCommand(taskList, command);
-            Storage.updateSavedData(taskList.recordedList);
+            Storage.updateSavedData(taskList.getRecordedList());
             Ui.printDivider();
         } while (!isBye);
     }
     private void setIsBye(Command command) {
-        isBye = command.isBye;
+        isBye = command.getIsBye();
     }
+
+    /**
+     * Checks the command type and calls the corresponding action to be carried out on the task list
+     * @param taskList Created Tasklist Object, used to store and access the task list
+     * @param command Command object to be checked and acted on
+     */
     public void processCommand(TaskList taskList, Command command) {
         switch(command.getCommandType()) {
         case Command.TODO:
