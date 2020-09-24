@@ -1,8 +1,13 @@
 package duke.tasklist.task;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Deadline extends Task{
     public Deadline(String description, String completeBy, String taskType) {
         super(description, completeBy, taskType);
+        parseForDate();
     }
 
     //Construct from saved data

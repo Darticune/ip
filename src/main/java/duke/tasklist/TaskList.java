@@ -81,8 +81,11 @@ public class TaskList {
         } catch (NullPointerException e) {
             System.out.println(Ui.INDEX_BEYOND_LIST);
             System.out.println(Ui.INVALID_INDEX);
+        } catch (IndexOutOfBoundsException  e) {
+            System.out.println(Ui.INDEX_BEYOND_LIST);
+            System.out.println(Ui.INVALID_INDEX);
         }
-    }
+}
 
     //Printing the list
     public void printTask(int index) {
