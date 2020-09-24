@@ -10,7 +10,6 @@ import duke.tasklist.TaskList;
  * command is given.
  */
 public class Parser {
-    boolean isBye;
     /**
      * Constructor for Parser, which:
      * Creates Command objects with user input and passes them to processCommand() until the command "bye" is given
@@ -18,10 +17,11 @@ public class Parser {
      * @param taskList Created Tasklist Object, used to store and access the task list
      */
     public Parser (TaskList taskList) {
+    protected boolean isBye;
         do {
             Command command = new Command();
             setIsBye(command);
-            if (!command.isValid) {
+            if (!command.getIsValid()) {
                 continue;
             }
 
@@ -34,25 +34,28 @@ public class Parser {
     private void setIsBye(Command command) {
         isBye = command.isBye;
     }
-    private void processCommand(TaskList taskList, Command command) {
-        switch(command.commandType) {
+    public void processCommand(TaskList taskList, Command command) {
+        switch(command.getCommandType()) {
         case Command.TODO:
-            taskList.addTodoToList(command.commandDetails);
+            taskList.addTodoToList(command.getCommandDetails());
             break;
         case Command.DEADLINE:
-            taskList.addDeadlineToList(command.commandDetails);
+            taskList.addDeadlineToList(command.getCommandDetails());
             break;
         case Command.EVENT:
-            taskList.addEventToList(command.commandDetails);
+            taskList.addEventToList(command.getCommandDetails());
             break;
         case Command.LIST:
-            taskList.printList();
+            taskList.printList(taskList.getRecordedList());
             break;
         case Command.DONE:
-            taskList.completeTask(command.commandDetails);
+            taskList.completeTask(command.getCommandDetails());
             break;
         case Command.DELETE:
-            taskList.deleteTask(command.commandDetails);
+            taskList.deleteTask(command.getCommandDetails());
+            break;
+        case Command.FIND:
+            taskList.findKeyword(command.getCommandDetails());
             break;
         case Command.BYE:
             Ui.bidGoodbye();

@@ -1,5 +1,9 @@
 package duke.tasklist.task;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * Deadline class, the class for the Deadline objects
  */
@@ -12,6 +16,7 @@ public class Deadline extends Task{
      */
     public Deadline(String description, String completeBy, String taskType) {
         super(description, completeBy, taskType);
+        parseForDate();
     }
     /**
      * Constructor for Deadline class for creation from savedData

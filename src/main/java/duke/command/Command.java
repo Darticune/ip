@@ -15,10 +15,11 @@ public class Command {
     public static final String DONE = "done";
     public static final String DELETE = "delete";
     public static final String BYE = "bye";
+    public static final String FIND = "find";
 
-    public String command, commandType, commandDetails = "";
-    public boolean isValid;
-    public boolean isBye;
+    protected String command, commandType, commandDetails = "";
+    protected boolean isValid;
+    protected boolean isBye;
 
     /**
      * Constructor for Command class
@@ -49,12 +50,26 @@ public class Command {
         }
     }
 
+    //Getters
+    public boolean getIsBye() {
+        return isBye;
+    }
+    public boolean getIsValid() {
+        return isValid;
+    }
+    public String getCommandType() {
+        return commandType;
+    }
+    public String getCommandDetails() {
+        return commandDetails;
+    }
     //Construct command
     private void setValidity (boolean validity) {
         isValid = validity;
     }
     private void setIsBye(String keyword) {
-        isBye =  keyword.equals("bye");
+        isBye =  keyword.equals(BYE);
+
     }
     private String getCommand() {
         Scanner input = new Scanner(System.in);
@@ -74,14 +89,19 @@ public class Command {
             return false;
         }
     }
-    private static boolean isCompleteTask(String commandType) {
-        return commandType.equals("done");
+    private boolean isCompleteTask(String commandType) {
+        return commandType.equals(DONE);
     }
     private boolean isDeleteTask(String commandType) {
-        return commandType.equals("delete");
+        return commandType.equals(DELETE);
+    }
+    private boolean isFindKeyword(String commandType) {
+        return commandType.equals(FIND);
     }
     private boolean requireCommandDetails(String commandType) {
-        return ((isAddTask(commandType)) || isCompleteTask(commandType) || isDeleteTask(commandType));
+        boolean requireCommandDetails1 = (isAddTask(commandType)) || isCompleteTask(commandType);
+        boolean requireCommandDetails2 = (isFindKeyword(commandType) || isDeleteTask(commandType));
+        return (requireCommandDetails1 || requireCommandDetails2);
     }
     private String extractCommandDetails(String command) {
             String[] parsedStrings = command.split(" ", 2);

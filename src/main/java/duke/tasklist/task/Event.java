@@ -1,5 +1,9 @@
 package duke.tasklist.task;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * Event class, the class for the Event objects
  */
@@ -12,6 +16,7 @@ public class Event extends Task{
      */
     public Event(String description, String duration, String taskType) {
         super(description, duration, taskType);
+        parseForDate();
     }
     /**
      * Constructor for Event class for creation from savedData
@@ -23,6 +28,7 @@ public class Event extends Task{
     public Event(String taskType, String state, String description, String timeline) {
         super(taskType, state, description, timeline);
     }
+
 
     /**
      * Returns formatted String ready to be printed to console

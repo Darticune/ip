@@ -13,7 +13,12 @@ import java.util.ArrayList;
  */
 public class TaskList {
 
+    public static final String TASK_TYPE_TODO = "T";
+    public static final String TASK_TYPE_DEADLINE = "D";
+    public static final String TASK_TYPE_EVENT = "E";
+    public static final String NO_TIMELINE = " ";
     private ArrayList<Task> recordedList;
+  
     /**
      * Constructor for TaskList class, initialises recordedList with the ArrayList<Task> that is passed to it
      * @param initialisedList ArrayList<Task> that recordedList is initiliased with
@@ -22,11 +27,16 @@ public class TaskList {
         recordedList = initialisedList;
     }
 
+    //Getters
+    public ArrayList<Task> getRecordedList () {
+        return recordedList;
+    }
+
     //Editing the list
     private void endAddTask() {
         System.out.println(Ui.ADDED_TASK);
         int listCount = recordedList.size();
-        printTask(listCount-1);
+        printTask(recordedList.get(listCount-1));
         printTaskTally();
     }
     /**
@@ -34,7 +44,7 @@ public class TaskList {
      * @param details String that contains description for the new Todo object
      */
     public void addTodoToList(String details) {
-        recordedList.add(new Todo(details, " ", "T"));
+        recordedList.add(new Todo(details, NO_TIMELINE, TASK_TYPE_TODO));
         endAddTask();
     }
     /**
@@ -44,7 +54,7 @@ public class TaskList {
     public void addDeadlineToList(String details) {
         String[] parsedStrings = details.split(" /by ", 2);
         try {
-            recordedList.add(new Deadline(parsedStrings[0], parsedStrings[1], "D"));
+            recordedList.add(new Deadline(parsedStrings[0], parsedStrings[1], TASK_TYPE_DEADLINE));
             endAddTask();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println(Ui.DEADLINE_FORMAT_INCORRECT);
@@ -58,7 +68,7 @@ public class TaskList {
     public void addEventToList(String details) {
         String[] parsedStrings = details.split(" /at ", 2);
         try {
-            recordedList.add(new Event(parsedStrings[0], parsedStrings[1], "E"));
+            recordedList.add(new Event(parsedStrings[0], parsedStrings[1], TASK_TYPE_EVENT));
             endAddTask();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println(Ui.EVENT_FORMAT_INCORRECT);
@@ -71,7 +81,7 @@ public class TaskList {
     private void setTaskAsDone(int index) {
         recordedList.get(index).setAsDone();
         System.out.println(Ui.COMPLETED_TASK);
-        printTask(index);
+        printTask(recordedList.get(index));
     }
     /**
      * Completes the task that is specified whose index is specified in the String commandDetails
@@ -107,15 +117,31 @@ public class TaskList {
         } catch (NullPointerException e) {
             System.out.println(Ui.INDEX_BEYOND_LIST);
             System.out.println(Ui.INVALID_INDEX);
+        } catch (IndexOutOfBoundsException  e) {
+            System.out.println(Ui.INDEX_BEYOND_LIST);
+            System.out.println(Ui.INVALID_INDEX);
         }
+}
+
+    //Finding Keyword
+    public void findKeyword(String details) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task task : recordedList) {
+            if((task.getDescription()).contains(details)) {
+                matchingTasks.add(task);
+            }
+        }
+        printMatchingTasks(matchingTasks);
     }
 
     //Printing the list
-    private void printTask(int index) {
-        Task element = recordedList.get(index);
-        System.out.print("[" + element.getTaskType() + "]");
-        System.out.print("[" + element.getStatusIcon() + "] " + element.getDescription());
-        System.out.println(element.getTimeline());
+    public void printMatchingTasks (ArrayList<Task> matchingTasks) {
+        if (matchingTasks.size() != 0) {
+            System.out.println(Ui.FIND_TASKS_SUCCESS);
+            printList(matchingTasks);
+        } else {
+            System.out.println(Ui.FIND_TASKS_FAILURE);
+        }
     }
     private void printTask(Task element) {
         System.out.print("[" + element.getTaskType() + "]");
@@ -125,15 +151,15 @@ public class TaskList {
     /**
      * Prints the ArrayList<Task> that is passed to it
      */
-    public void printList() {
-        int listCount = recordedList.size();
+    public void printList(ArrayList<Task> listToPrint) {
+        int listCount = listToPrint.size();
         if (listCount == 0) {
             System.out.println(Ui.EMPTY_LIST);
         } else {
             for (int i = 0; i < listCount; i++) {
                 System.out.print(i + 1);
                 System.out.print(". ");
-                printTask(i);
+                printTask(listToPrint.get(i));
             }
         }
     }
