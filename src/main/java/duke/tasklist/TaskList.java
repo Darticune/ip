@@ -8,14 +8,21 @@ import duke.tasklist.task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * TaskList class, the class that holds the lists of tqasks and the methods that operate on it
+ */
 public class TaskList {
 
     public static final String TASK_TYPE_TODO = "T";
     public static final String TASK_TYPE_DEADLINE = "D";
     public static final String TASK_TYPE_EVENT = "E";
     public static final String NO_TIMELINE = " ";
-    protected ArrayList<Task> recordedList;
-
+    private ArrayList<Task> recordedList;
+  
+    /**
+     * Constructor for TaskList class, initialises recordedList with the ArrayList<Task> that is passed to it
+     * @param initialisedList ArrayList<Task> that recordedList is initiliased with
+     */
     public TaskList (ArrayList<Task> initialisedList) {
         recordedList = initialisedList;
     }
@@ -26,16 +33,24 @@ public class TaskList {
     }
 
     //Editing the list
-    public void endAddTask() {
+    private void endAddTask() {
         System.out.println(Ui.ADDED_TASK);
         int listCount = recordedList.size();
         printTask(recordedList.get(listCount-1));
         printTaskTally();
     }
+    /**
+     * Adds a new Todo object to recordedList with the String details that is passed to it
+     * @param details String that contains description for the new Todo object
+     */
     public void addTodoToList(String details) {
         recordedList.add(new Todo(details, NO_TIMELINE, TASK_TYPE_TODO));
         endAddTask();
     }
+    /**
+     * Adds a new Deadline object to recordedList with the String details that is passed to it
+     * @param details String that contains description for the new Deadline object
+     */
     public void addDeadlineToList(String details) {
         String[] parsedStrings = details.split(" /by ", 2);
         try {
@@ -46,6 +61,10 @@ public class TaskList {
             System.out.println(Ui.CORRECT_DEADLINE_FORMAT);
         }
     }
+    /**
+     * Adds a new Event object to recordedList with the String details that is passed to it
+     * @param details String that contains description for the new Event object
+     */
     public void addEventToList(String details) {
         String[] parsedStrings = details.split(" /at ", 2);
         try {
@@ -56,14 +75,18 @@ public class TaskList {
             System.out.println(Ui.CORRECT_EVENT_FORMAT);
         }
     }
-    public int getTaskIndex(String commandDetails) {
+    private int getTaskIndex(String commandDetails) {
         return Integer.parseInt(commandDetails)-1;
     }
-    public void setTaskAsDone(int index) {
+    private void setTaskAsDone(int index) {
         recordedList.get(index).setAsDone();
         System.out.println(Ui.COMPLETED_TASK);
         printTask(recordedList.get(index));
     }
+    /**
+     * Completes the task that is specified whose index is specified in the String commandDetails
+     * @param commandDetails String that contains the index of the subclass object of Task to be completed
+     */
     public void completeTask(String commandDetails) {
         try {
             int index = getTaskIndex(commandDetails);
@@ -75,12 +98,16 @@ public class TaskList {
             System.out.println(Ui.INVALID_INDEX);
         }
     }
-    public void removeTaskFromList(int index) {
+    private void removeTaskFromList(int index) {
         Task targetedTask = recordedList.remove(index);
         System.out.println(Ui.DELETED_TASK);
         printTask(targetedTask);
         printTaskTally();
     }
+    /**
+     * Removes the task that is specified whose index is specified in the String commandDetails
+     * @param commandDetails String that contains the index of the subclass object of Task to be deleted
+     */
     public void deleteTask(String commandDetails) {
         try {
             int index = getTaskIndex(commandDetails);
@@ -116,11 +143,14 @@ public class TaskList {
             System.out.println(Ui.FIND_TASKS_FAILURE);
         }
     }
-    public void printTask(Task element) {
+    private void printTask(Task element) {
         System.out.print("[" + element.getTaskType() + "]");
         System.out.print("[" + element.getStatusIcon() + "] " + element.getDescription());
         System.out.println(element.getTimeline());
     }
+    /**
+     * Prints the ArrayList<Task> that is passed to it
+     */
     public void printList(ArrayList<Task> listToPrint) {
         int listCount = listToPrint.size();
         if (listCount == 0) {
@@ -133,7 +163,7 @@ public class TaskList {
             }
         }
     }
-    public void printTaskTally() {
+    private void printTaskTally() {
         int listCount = recordedList.size();
         System.out.print("Now you have " + listCount + " task");
         if(listCount > 1) {

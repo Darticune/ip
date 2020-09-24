@@ -4,6 +4,9 @@ import duke.ui.Ui;
 
 import java.util.Scanner;
 
+/**
+ * Command class, the class that takes in a command from the user input, checks if it is valid, and parses it
+ */
 public class Command {
     public static final String TODO = "todo";
     public static final String DEADLINE = "deadline";
@@ -18,6 +21,18 @@ public class Command {
     protected boolean isValid;
     protected boolean isBye;
 
+    /**
+     * Constructor for Command class
+     * Takes in user input via getCommand() and checks if the input is valid
+     * <p>
+     * If valid, it is parsed into the fields:
+     * commandType - The type of command it is
+     * commandDetails - The details of the command
+     * and the isValid boolean is set to true. Otherwise, isValid is set to false.
+     * <p>
+     * It also sets the boolean isBye with setIsBye so that the Parser class can extract this value to break the loop
+     * if so.
+     */
     public Command () {
         command = getCommand();
         commandType = extractCommandType(command.trim());
@@ -49,21 +64,22 @@ public class Command {
         return commandDetails;
     }
     //Construct command
-    public void setValidity (boolean validity) {
+    private void setValidity (boolean validity) {
         isValid = validity;
     }
-    public void setIsBye(String keyword) {
+    private void setIsBye(String keyword) {
         isBye =  keyword.equals(BYE);
+
     }
-    public String getCommand() {
+    private String getCommand() {
         Scanner input = new Scanner(System.in);
         return input.nextLine();
     }
-    public String extractCommandType(String command) {
+    private String extractCommandType(String command) {
         String[] parsedStrings = command.split(" ", 2);
         return parsedStrings[0];
     }
-    public boolean isAddTask(String commandType) {
+    private boolean isAddTask(String commandType) {
         switch (commandType) {
         case "todo":
         case "deadline":
@@ -73,25 +89,25 @@ public class Command {
             return false;
         }
     }
-    public boolean isCompleteTask(String commandType) {
+    private boolean isCompleteTask(String commandType) {
         return commandType.equals(DONE);
     }
-    public boolean isDeleteTask(String commandType) {
+    private boolean isDeleteTask(String commandType) {
         return commandType.equals(DELETE);
     }
-    public boolean isFindKeyword(String commandType) {
+    private boolean isFindKeyword(String commandType) {
         return commandType.equals(FIND);
     }
-    public boolean requireCommandDetails(String commandType) {
+    private boolean requireCommandDetails(String commandType) {
         boolean requireCommandDetails1 = (isAddTask(commandType)) || isCompleteTask(commandType);
         boolean requireCommandDetails2 = (isFindKeyword(commandType) || isDeleteTask(commandType));
         return (requireCommandDetails1 || requireCommandDetails2);
     }
-    public String extractCommandDetails(String command) {
+    private String extractCommandDetails(String command) {
             String[] parsedStrings = command.split(" ", 2);
             return parsedStrings[1];
     }
-    public void handleEmptyCommandDetails(String commandType) {
+    private void handleEmptyCommandDetails(String commandType) {
         Ui.printDivider();
         System.out.println(Ui.DETAILS_ERROR + commandType + Ui.EMPTY_FIELD);
         Ui.printDivider();
