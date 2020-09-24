@@ -1,5 +1,9 @@
 package duke.tasklist.task;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public abstract class Task {
     public static final String TICK_SYMBOL = "\u2713";
     public static final String CROSS_SYMBOL = "\u2718";
@@ -27,6 +31,25 @@ public abstract class Task {
         }
         this.taskType = taskType;
         this.timeline = timeline;
+    }
+
+    public void parseForDate() {
+        String[] parsedStrings = timeline.split(" ", 2);
+        try {
+            timeline = (toDateFormat(parsedStrings[0]));
+            timeline += (" " + parsedStrings[1]);
+        } catch (DateTimeParseException e) {
+            System.out.println("WHY U NO WORK");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("SO U FUCKED UP HERE");
+        }
+    }
+
+    public String toDateFormat (String date) {
+        DateTimeFormatter inFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        DateTimeFormatter outFormatter = DateTimeFormatter.ofPattern("d MMM yyyy");
+        LocalDate parsedDate = LocalDate.parse(date, inFormatter);
+        return outFormatter.format(parsedDate);
     }
 
     public String getDescription() {
