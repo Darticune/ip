@@ -38,13 +38,16 @@ public class Parser {
             taskList.addEventToList(command.commandDetails);
             break;
         case Command.LIST:
-            taskList.printList();
+            taskList.printList(taskList.recordedList);
             break;
         case Command.DONE:
             taskList.completeTask(command.commandDetails);
             break;
         case Command.DELETE:
             taskList.deleteTask(command.commandDetails);
+            break;
+        case Command.FIND:
+            taskList.findKeyword(command.commandDetails);
             break;
         case Command.BYE:
             Ui.bidGoodbye();
