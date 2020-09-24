@@ -14,10 +14,15 @@ public class TaskList {
     public static final String TASK_TYPE_DEADLINE = "D";
     public static final String TASK_TYPE_EVENT = "E";
     public static final String NO_TIMELINE = " ";
-    public ArrayList<Task> recordedList;
+    protected ArrayList<Task> recordedList;
 
     public TaskList (ArrayList<Task> initialisedList) {
         recordedList = initialisedList;
+    }
+
+    //Getters
+    public ArrayList<Task> getRecordedList () {
+        return recordedList;
     }
 
     //Editing the list

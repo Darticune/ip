@@ -1,4 +1,0 @@
-T | 0 | aaaa
-T | 0 | aaa
-T | 0 | aaaaka
-E | 0 | fuaaaakkk | 14/12/1998 1800HRS

@@ -14,9 +14,9 @@ public class Command {
     public static final String BYE = "bye";
     public static final String FIND = "find";
 
-    public String command, commandType, commandDetails = "";
-    public boolean isValid;
-    public boolean isBye;
+    protected String command, commandType, commandDetails = "";
+    protected boolean isValid;
+    protected boolean isBye;
 
     public Command () {
         command = getCommand();
@@ -35,6 +35,19 @@ public class Command {
         }
     }
 
+    //Getters
+    public boolean getIsBye() {
+        return isBye;
+    }
+    public boolean getIsValid() {
+        return isValid;
+    }
+    public String getCommandType() {
+        return commandType;
+    }
+    public String getCommandDetails() {
+        return commandDetails;
+    }
     //Construct command
     public void setValidity (boolean validity) {
         isValid = validity;
@@ -60,7 +73,7 @@ public class Command {
             return false;
         }
     }
-    public static boolean isCompleteTask(String commandType) {
+    public boolean isCompleteTask(String commandType) {
         return commandType.equals(DONE);
     }
     public boolean isDeleteTask(String commandType) {
