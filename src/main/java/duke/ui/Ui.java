@@ -21,6 +21,8 @@ public class Ui {
     public static final String EVENT_FORMAT_INCORRECT = "Command format for Event is incorrect.";
     public static final String INDEX_BEYOND_LIST = "Sorry, there is no such item.";
     public static final String INVALID_INDEX = "Please enter a valid task number.";
+    public static final String FIND_TASKS_SUCCESS = "Here are the matching tasks in your list:";
+    public static final String FIND_TASKS_FAILURE = "Sorry! There were no tasks with that keyword!";
 
     public static void printDivider() {
         System.out.println(DIVIDER);
