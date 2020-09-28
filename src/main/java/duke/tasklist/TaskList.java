@@ -123,16 +123,20 @@ public class TaskList {
             System.out.println(Ui.INVALID_INDEX);
         }
 }
-
+    private boolean containsKeyword(String description, String keyword) {
+        String descriptionLowerCase = description.toLowerCase();
+        String keywordLowerCase = keyword.toLowerCase();
+        return descriptionLowerCase.contains(keywordLowerCase);
+    }
     /**
      * Parses recordedList for subclass objects of Task for those with description contain the String details, adds
      * them to a new ArrayList<Task> matchingTasks and passes the whole list to printMatchingTasks() to print to console
-     * @param details String containing the keyword(s) to be searched for
+     * @param keyword String containing the keyword(s) to be searched for
      */
-    public void findKeyword(String details) {
+    public void findKeyword(String keyword) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : recordedList) {
-            if((task.getDescription()).contains(details)) {
+            if(containsKeyword(task.getDescription(), keyword)) {
                 matchingTasks.add(task);
             }
         }

@@ -49,7 +49,7 @@ public class Command {
             }
         } else {
             String[] parsedStrings = command.split(" ");
-            if (parsedStrings.length != 1) {
+            if ((parsedStrings.length != 1) && isRecognisedCommand(commandType)) {
                 handleUnnecessaryCommandDetails(commandType);
                 setValidity(false);
             }
@@ -75,7 +75,6 @@ public class Command {
     }
     private void setIsBye(String keyword) {
         isBye =  keyword.equals(BYE);
-
     }
     private String getCommand() {
         Scanner input = new Scanner(System.in);
@@ -104,6 +103,12 @@ public class Command {
     private boolean isFindKeyword(String commandType) {
         return commandType.equals(FIND);
     }
+    private boolean isList(String commandType) {
+        return commandType.equals(LIST);
+    }
+    private boolean isBye(String commandType) {
+        return commandType.equals(BYE);
+    }
     private boolean requireCommandDetails(String commandType) {
         boolean requireCommandDetails1 = (isAddTask(commandType)) || isCompleteTask(commandType);
         boolean requireCommandDetails2 = (isFindKeyword(commandType) || isDeleteTask(commandType));
@@ -122,5 +127,11 @@ public class Command {
         Ui.printDivider();
         System.out.println(Ui.DETAILS_ERROR + commandType + Ui.NON_EMPTY_FIELD);
         Ui.printDivider();
+    }
+    private boolean isRecognisedCommand (String commandType) {
+        boolean isRecognisedCommand1 = (isAddTask(commandType)) || isCompleteTask(commandType);
+        boolean isRecognisedCommand2 = (isFindKeyword(commandType) || isDeleteTask(commandType));
+        boolean isRecognisedCommand3 = (isList(commandType) || isBye(commandType));
+        return (isRecognisedCommand1 || isRecognisedCommand2 || isRecognisedCommand3);
     }
 }
