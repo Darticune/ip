@@ -1,11 +1,24 @@
 list
-todo read a book
-deadline return book /by Friday 2359
-event go to library /at Friday
+list 52
+invalid command
+bye bye
+todo FiRsT Todo
+deadline invalid deadline
+deadline first deadline with invalid date /by 15/06/19999999999999
+deadline second deadline with valid date /by 15/06/1999
+event invalid event
+event FIRST event with invalid date /at 19/19/1999999999999
+event SECOND event with valid date /at 14/02/1997
 list
+done 25
 done 2
 list
-done 4
+find first
+find FIRST
+find fIrSt
+delete 52
+delete 1
+delete 1
 list
-rubbish
+bye bye
 bye

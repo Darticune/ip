@@ -49,6 +49,8 @@ Adds a Deadline to the task list in Duke
     Now you have 1 task in the list.
     ____________________________________________________________
     ```
+- Note:
+    - If TIMELINE entered contains a date in the format of dd/MM/yyyy (e.g. 15/06/1998), it will automatically be converted into dd MMM yyyy (e.g. 15 Jun 1998)
 <br/>
 <br/>
 
@@ -74,6 +76,8 @@ Adds a Event to the task list in Duke
     Now you have 1 task in the list.
     ____________________________________________________________
     ```
+- Note:
+    - If TIMELINE entered contains a date in the format of dd/MM/yyyy (e.g. 15/06/1998), it will automatically be converted into dd MMM yyyy (e.g. 15 Jun 1998)
 <br/>
 <br/>
 
