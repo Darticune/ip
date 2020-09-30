@@ -29,7 +29,7 @@ public class TaskList {
 
     //Getters
     /**
-     * Getter for the recordedList stored in TaskList Objects
+     * Returns the recordedList stored in TaskList Objects
      * @return ArrayList<Task> stored in TaskList object
      */
     public ArrayList<Task> getRecordedList () {
@@ -45,7 +45,7 @@ public class TaskList {
     }
     /**
      * Adds a new Todo object to recordedList with the String details that is passed to it
-     * @param details String that contains description for the new Todo object
+     * @param details Description for the new Todo object
      */
     public void addTodoToList(String details) {
         recordedList.add(new Todo(details, NO_TIMELINE, TASK_TYPE_TODO));
@@ -53,7 +53,7 @@ public class TaskList {
     }
     /**
      * Adds a new Deadline object to recordedList with the String details that is passed to it
-     * @param details String that contains description for the new Deadline object
+     * @param details Description for the new Deadline object
      */
     public void addDeadlineToList(String details) {
         String[] parsedStrings = details.split(" /by ", 2);
@@ -67,7 +67,7 @@ public class TaskList {
     }
     /**
      * Adds a new Event object to recordedList with the String details that is passed to it
-     * @param details String that contains description for the new Event object
+     * @param details Description for the new Event object
      */
     public void addEventToList(String details) {
         String[] parsedStrings = details.split(" /at ", 2);
@@ -88,8 +88,8 @@ public class TaskList {
         printTask(recordedList.get(index));
     }
     /**
-     * Completes the task that is specified whose index is specified in the String commandDetails
-     * @param commandDetails String that contains the index of the subclass object of Task to be completed
+     * Sets the task whose index is specified in commandDetails to done by changing its isDone state
+     * @param commandDetails Index of the subclass object of Task to be completed
      */
     public void completeTask(String commandDetails) {
         try {
@@ -109,8 +109,8 @@ public class TaskList {
         printTaskTally();
     }
     /**
-     * Removes the task that is specified whose index is specified in the String commandDetails
-     * @param commandDetails String that contains the index of the subclass object of Task to be deleted
+     * Removes the task whose index is specified in commandDetails
+     * @param commandDetails Index of the subclass object of Task to be deleted
      */
     public void deleteTask(String commandDetails) {
         try {
@@ -131,7 +131,7 @@ public class TaskList {
     /**
      * Parses recordedList for subclass objects of Task for those with description contain the String details, adds
      * them to a new ArrayList<Task> matchingTasks and passes the whole list to printMatchingTasks() to print to console
-     * @param keyword String containing the keyword(s) to be searched for
+     * @param keyword Keyword(s) to be searched for
      */
     public void findKeyword(String keyword) {
         ArrayList<Task> matchingTasks = new ArrayList<>();

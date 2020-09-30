@@ -37,7 +37,7 @@ public class Parser {
     }
 
     /**
-     * Checks the command type and calls the corresponding action to be carried out on the task list
+     * Checks the command type and calls the functions to be carried out on the task list
      * @param taskList Created Tasklist Object, used to store and access the task list
      * @param command Command object to be checked and acted on
      */

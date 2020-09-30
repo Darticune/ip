@@ -6,9 +6,9 @@ package duke.tasklist.task;
 public class Deadline extends Task{
     /**
      * Constructor for Deadline class for creation from user input
-     * @param description String that contains description of Deadline
-     * @param completeBy String that contains timeline of Deadline
-     * @param taskType String that contains fixed taskType for Deadline objects
+     * @param description Description of Deadline
+     * @param completeBy Timeline of Deadline
+     * @param taskType Fixed taskType for Deadline objects
      */
     public Deadline(String description, String completeBy, String taskType) {
         super(description, completeBy, taskType);
@@ -16,10 +16,10 @@ public class Deadline extends Task{
     }
     /**
      * Constructor for Deadline class for creation from savedData
-     * @param taskType String that contains fixed taskType for Deadline objects
-     * @param state String that contains the isDone state of the Deadline object
-     * @param description String that contains description of Deadline
-     * @param timeline String that contains timeline of Deadline
+     * @param taskType Fixed taskType for Deadline objects
+     * @param state isDone state of the Deadline object
+     * @param description Description of Deadline
+     * @param timeline Timeline of Deadline
      */
     public Deadline(String taskType, String state, String description, String timeline) {
         super(taskType, state, description, timeline);

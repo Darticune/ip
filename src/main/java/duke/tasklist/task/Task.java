@@ -19,9 +19,9 @@ public abstract class Task {
 
     /**
      * Constructor for Task class for creation from user input
-     * @param description String that contains description of Task
-     * @param timeline String that contains timeline of Task
-     * @param taskType String that contains fixed taskType for Task objects
+     * @param description Description of Task
+     * @param timeline Timeline of Task
+     * @param taskType Fixed taskType for Task objects
      */
     public Task(String description, String timeline, String taskType) {
         this.description = description;
@@ -32,10 +32,10 @@ public abstract class Task {
 
     /**
      * Constructor for Task class for creation from savedData
-     * @param taskType String that contains fixed taskType for Task objects
-     * @param state String that contains the isDone state of the Task object
-     * @param description String that contains description of Task
-     * @param timeline String that contains timeline of Task
+     * @param taskType Fixed taskType for Task objects
+     * @param state isDone state of the Task object
+     * @param description Description of Task
+     * @param timeline Timeline of Task
      */
     public Task(String taskType, String state, String description, String timeline) {
         this.description = description;
@@ -56,7 +56,7 @@ public abstract class Task {
         return outFormatter.format(parsedDate);
     }
     /**
-     * Parses the timeline field for a date that will be converted from d/MM/yyyy to d MMM yyyy
+     * Converts dates of the form d/MM/yyyy to d MMM yyyy in the timeline field
      */
     public void parseForDate() {
         String[] parsedStrings = timeline.split(" ");
@@ -77,29 +77,29 @@ public abstract class Task {
 
     //Getters
     /**
-     * Getter for description of Task object
-     * @return String containing description of Task object
+     * Returns description of Task object
+     * @return description field of Task object
      */
     public String getDescription() {
         return description;
     }
     /**
-     * Getter for Status Icon representing isDone
+     * Returns Status Icon representing isDone
      * @return String containing either TICK_SYMBOL if Task is Done and CROSS_SYMBOL if Task is not Done
      */
     public String getStatusIcon() {
         return (isDone ? TICK_SYMBOL : CROSS_SYMBOL);
     }
     /**
-     * Getter for timeline of Task object
-     * @return String containing timeline of Task object
+     * Returns timeline of Task object
+     * @return timeline field of Task object
      */
     public String getTimeline() {
         return timeline;
     }
     /**
-     * Getter for taskType of Task object
-     * @return String containing taskType of Task object
+     * Returns taskType of Task object
+     * @return TaskType field of Task object
      */
     public String getTaskType() {
         return taskType;
@@ -107,7 +107,7 @@ public abstract class Task {
 
     //Setters
     /**
-     * Setter for isDone to true from the default false once the done command is issued for the Task object
+     * Sets isDone to true from the default false once the done command is issued for this Task object
      */
     public void setAsDone() {
         this.isDone = true;

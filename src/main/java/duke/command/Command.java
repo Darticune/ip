@@ -28,7 +28,9 @@ public class Command {
      * If valid, it is parsed into the fields:
      * commandType - The type of command it is
      * commandDetails - The details of the command
-     * and the isValid boolean is set to true. Otherwise, isValid is set to false.
+     * isValid boolean is set to true.
+     * <p>
+     * If invalid, isValid is set to false.
      * <p>
      * It also sets the boolean isBye with setIsBye so that the Parser class can extract this value to break the loop
      * if so.
@@ -57,18 +59,35 @@ public class Command {
     }
 
     //Getters
+    /**
+     * Returns isBye (boolean) state
+     * @return isBye field
+     */
     public boolean getIsBye() {
         return isBye;
     }
+    /**
+     * Returns isValid (boolean) state
+     * @return isValid field
+     */
     public boolean getIsValid() {
         return isValid;
     }
+    /**
+     * Returns the commandType of the command
+     * @return commandType field
+     */
     public String getCommandType() {
         return commandType;
     }
+    /**
+     * Returns the commandDetails of the command
+     * @return commandDetails field
+     */
     public String getCommandDetails() {
         return commandDetails;
     }
+    
     //Construct command
     private void setValidity (boolean validity) {
         isValid = validity;

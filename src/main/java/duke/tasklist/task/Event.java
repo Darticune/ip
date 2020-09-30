@@ -6,9 +6,9 @@ package duke.tasklist.task;
 public class Event extends Task{
     /**
      * Constructor for Event class for creation from user input
-     * @param description String that contains description of Event
-     * @param duration String that contains timeline of Event
-     * @param taskType String that contains fixed taskType for Event objects
+     * @param description Description of Event
+     * @param duration Timeline of Event
+     * @param taskType Fixed taskType for Event objects
      */
     public Event(String description, String duration, String taskType) {
         super(description, duration, taskType);
@@ -16,10 +16,10 @@ public class Event extends Task{
     }
     /**
      * Constructor for Event class for creation from savedData
-     * @param taskType String that contains fixed taskType for Event objects
-     * @param state String that contains the isDone state of the Event object
-     * @param description String that contains description of Event
-     * @param timeline String that contains timeline of Event
+     * @param taskType Fixed taskType for Event objects
+     * @param state isDone state of the Event object
+     * @param description Description of Event
+     * @param timeline Timeline of Event
      */
     public Event(String taskType, String state, String description, String timeline) {
         super(taskType, state, description, timeline);
